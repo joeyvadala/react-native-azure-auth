@@ -94,7 +94,7 @@ export default class WebAuth {
         console.log("AzureAuth: Token Response - ", tokenResponse, this.client.cache)
 
         if (tokenResponse.refreshToken) {
-            AsyncStorage.putItem("@WSF:refreshToken", tokenResponse.refreshToken)
+            AsyncStorage.setItem("@WSF:refreshToken", JSON.stringify(tokenResponse.refreshToken))
             this.client.cache.saveRefreshToken(tokenResponse)
         }
         if (tokenResponse.accessToken) {
