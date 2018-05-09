@@ -137,6 +137,7 @@ export default class Auth {
    * @memberof Auth
    */
     refreshTokens(parameters = {redirectUri: this.redirectUri}) {
+        console.log("AzureAuth Refresh Params: ", parameters)
         const payload = validate({
             parameters: {
                 refreshToken: { required: true, toName: 'refresh_token' },
