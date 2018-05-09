@@ -1,7 +1,7 @@
 import Agent from './agent'
 import url from 'url'
 import AuthError from '../auth/authError'
-import { Platform } from 'react-native'
+import { AsyncStorage, Platform } from 'react-native'
 import Scope from '../token/scope'
 import BaseTokenItem from '../token/baseTokenItem'
 
