@@ -136,7 +136,7 @@ export default class Auth {
    *
    * @memberof Auth
    */
-    refreshTokens(refreshToken, scope) {
+    refreshTokens(refreshToken, scopeString) {
         console.log("AzureAuth: Refresh Params - ", parameters)
         const payload = validate({
             parameters: {
@@ -144,7 +144,7 @@ export default class Auth {
                 scope: { required: true }
             }
         }, parameters)
-        const scope = new Scope(scope)
+        const scope = new Scope(scopeString)
         return this.client
             .post('token', {
                 refresh_token: refreshToken,
