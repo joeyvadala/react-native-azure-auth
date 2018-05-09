@@ -22,7 +22,7 @@ function responseHandler (response, exceptions = {}) {
  *
  * @export Auth
  * @see https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols
- * 
+ *
  * @class Auth
  */
 export default class Auth {
@@ -50,10 +50,10 @@ export default class Auth {
    * @param {String} parameters.redirectUri where the AS will redirect back after success or failure.
    * @param {String} parameters.state random string to prevent CSRF attacks.
    * @param {String} parameters.scope a space-separated list of scopes that you want the user to consent to.
-   * @param {String} parameters.prompt (optional) indicates the type of user interaction that is required. 
+   * @param {String} parameters.prompt (optional) indicates the type of user interaction that is required.
    *    The only valid values at this time are 'login', 'none', and 'consent'.
    * @returns {String} authorize url with specified parameters to redirect to for AuthZ/AuthN.
-   * 
+   *
    * @see https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols-oauth-code
    *
    * @memberof Auth
@@ -64,12 +64,12 @@ export default class Auth {
                 responseType: { required: true, toName: 'response_type' },
                 scope: { required: true },
                 state: { required: true },
-                prompt: {} 
+                prompt: {}
             },
-            validate: false // not declared params are allowed: 
+            validate: false // not declared params are allowed:
         }, parameters)
-        return this.client.url('authorize', 
-            {...query, 
+        return this.client.url('authorize',
+            {...query,
                 client_id: this.clientId,
                 redirect_uri: this.redirectUri
             })
@@ -100,7 +100,7 @@ export default class Auth {
    * @param {Object} input input used to obtain tokens from a code
    * @param {String} input.code code returned by `/authorize`.
    * @param {String} input.redirectUri original redirectUri used when calling `/authorize`.
-   * @param {String} input.scope A space-separated list of scopes. 
+   * @param {String} input.scope A space-separated list of scopes.
    *    The scopes requested in this leg must be equivalent to or a subset of the scopes requested in the first leg
    * @returns {Promise}
    * @see https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols-oauth-code#request-an-access-token
@@ -116,9 +116,9 @@ export default class Auth {
         }, input)
 
         return this.client
-            .post('token', 
-                {...payload, 
-                    client_id: this.clientId, 
+            .post('token',
+                {...payload,
+                    client_id: this.clientId,
                     redirect_uri: this.redirectUri,
                     grant_type: 'authorization_code'})
             .then(responseHandler)
@@ -137,14 +137,9 @@ export default class Auth {
    * @memberof Auth
    */
     refreshTokens(refreshToken, scopeString) {
-        console.log("AzureAuth: Refresh Params - ", parameters)
-        const payload = validate({
-            parameters: {
-                refreshToken: { required: true, toName: 'refresh_token' },
-                scope: { required: true }
-            }
-        }, parameters)
+
         const scope = new Scope(scopeString)
+        console.log("REFRESH TOKEN:", refreshToken)
         return this.client
             .post('token', {
                 refresh_token: refreshToken,
@@ -167,11 +162,11 @@ export default class Auth {
 
     /**
      * Try to obtain token silently without user interaction
-     * 
-     * @param {Object} parameters 
+     *
+     * @param {Object} parameters
      * @param {String} parameters.userId user login name (e.g. from Id token)
      * @param {String} parameters.scope scopes requested for the issued tokens.
-     * 
+     *
      * @memberof Auth
      */
     async acquireTokenSilent(parameters = {}) {
@@ -181,7 +176,7 @@ export default class Auth {
                 scope: { required: true }
             }
         }, parameters)
-        const scope = new Scope(input.scope)   
+        const scope = new Scope(input.scope)
 
         try {
             let accessToken = await this.cache.getAccessToken(input.userId, scope)
