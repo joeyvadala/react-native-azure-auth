@@ -190,6 +190,7 @@ export default class Auth {
                 return accessToken
             }
             let refreshToken = await this.cache.getRefreshToken(input.userId)
+            console.log("AzureAuth: Refresh Token - ", refreshToken, input.userId, scope)
             if (refreshToken) {
                 const tokenResponse = await this.refreshTokens(refreshToken, scope)
                 if (tokenResponse && tokenResponse.refreshToken) {
