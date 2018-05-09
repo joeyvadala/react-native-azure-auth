@@ -9,7 +9,7 @@ import BaseTokenItem from '../token/baseTokenItem'
  * Helper to perform Auth against Azure AD login page
  *
  * It will use `/authorize` endpoint of the Authorization Server (AS)
- * with Code Grant 
+ * with Code Grant
  *
  * @export
  * @class WebAuth
@@ -30,7 +30,7 @@ export default class WebAuth {
    * In iOS it will use `SFSafariViewController` and in Android Chrome Custom Tabs.
    *
    * @param {Object} options parameters to send
-   * @param {String} [options.scope] scopes requested for the issued tokens. 
+   * @param {String} [options.scope] scopes requested for the issued tokens.
    *    OpenID Connect scopes are always added to every request. `openid profile offline_access`
    *    @see https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-scopes
    * @returns {Promise<BaseTokenItem | AccessTokenItem>}
@@ -94,7 +94,7 @@ export default class WebAuth {
         console.log("AzureAuth: Token Response - ", tokenResponse, this.client.cache)
 
         if (tokenResponse.refreshToken) {
-            AsyncStorage.setItem("@WSF:refreshToken", JSON.stringify(tokenResponse.refreshToken))
+            AsyncStorage.setItem("@WSF:refreshToken", tokenResponse.refreshToken)
             this.client.cache.saveRefreshToken(tokenResponse)
         }
         if (tokenResponse.accessToken) {
@@ -106,7 +106,7 @@ export default class WebAuth {
         }
     }
 
-    
+
     /**
    *  Removes Azure session
    *  In iOS it will use `SFSafariViewController`
