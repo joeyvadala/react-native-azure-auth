@@ -91,6 +91,7 @@ export default class WebAuth {
             })
         }
         const tokenResponse = await client.exchange({code, scope: scope.toString()})
+        console.log("AzureAuth: Token Response - ", tokenResponse)
         if (tokenResponse.refreshToken) {
             this.client.cache.saveRefreshToken(tokenResponse)
         }
