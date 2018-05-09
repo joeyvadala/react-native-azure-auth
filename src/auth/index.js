@@ -137,7 +137,7 @@ export default class Auth {
    * @memberof Auth
    */
     refreshTokens(parameters = {redirectUri: this.redirectUri}) {
-        console.log("AzureAuth Refresh Params: ", parameters)
+        console.log("AzureAuth: Refresh Params - ", parameters)
         const payload = validate({
             parameters: {
                 refreshToken: { required: true, toName: 'refresh_token' },
@@ -185,6 +185,7 @@ export default class Auth {
 
         try {
             let accessToken = await this.cache.getAccessToken(input.userId, scope)
+            console.log("AzureAuth: Access Token - ", accessToken, input.userId, scope)
             if (accessToken && !accessToken.isExpired()) {
                 return accessToken
             }
@@ -200,7 +201,7 @@ export default class Auth {
                 }
             }
         } catch (error) {
-            console.error('Error in silent request: ', error)
+            console.warn('Error in silent request: ', error)
             //return error
         }
 
