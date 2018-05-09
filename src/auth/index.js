@@ -5,7 +5,7 @@ import AuthError from './authError'
 import TokenCache from '../token/cache'
 import log from '../utils/logger'
 
-import { NativeModules, Platform } from 'react-native'
+import { NativeModules, Platform, AsyncStorage } from 'react-native'
 import Scope from '../token/scope'
 
 const { AzureAuth } = NativeModules
@@ -136,7 +136,7 @@ export default class Auth {
    *
    * @memberof Auth
    */
-    refreshTokens(parameters = {redirectUri: this.redirectUri}) {
+    refreshTokens(refreshToken, scope) {
         console.log("AzureAuth: Refresh Params - ", parameters)
         const payload = validate({
             parameters: {
@@ -144,10 +144,10 @@ export default class Auth {
                 scope: { required: true }
             }
         }, parameters)
-        const scope = new Scope(payload.scope)
+        const scope = new Scope(scope)
         return this.client
             .post('token', {
-                ...payload,
+                refresh_token: refreshToken,
                 client_id: this.clientId,
                 grant_type: 'refresh_token',
                 redirect_uri: this.redirectUri,
@@ -189,7 +189,7 @@ export default class Auth {
             if (accessToken && !accessToken.isExpired()) {
                 return accessToken
             }
-            let refreshToken = await this.cache.getRefreshToken(input.userId)
+            let refreshToken = await AsyncStorage.getItem("@WSF:refreshToken")
             console.log("AzureAuth: Refresh Token - ", refreshToken, input.userId, scope)
             if (refreshToken) {
                 const tokenResponse = await this.refreshTokens(refreshToken, scope)
