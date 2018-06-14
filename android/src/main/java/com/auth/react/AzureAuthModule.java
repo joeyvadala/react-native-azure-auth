@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class AzureAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
-    private static final int CANCEL_EVENT_DELAY = 100;
+    private static final int CANCEL_EVENT_DELAY = 5000;
 
     private final ReactApplicationContext reactContext;
     private Callback callback;
