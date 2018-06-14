@@ -54,10 +54,16 @@ export default class WebAuth {
             nonce: nonce
         }
         const loginUrl = this.client.loginUrl(requestParams)
+        
+        console.log("AZAU: loginUrl:", loginUrl)
 
         let redirectUrl = await agent.openWeb(loginUrl)
+        
+        console.log("AZAU: redirectUrl:", redirectUrl)
 
         if (!redirectUrl || !redirectUrl.startsWith(client.redirectUri)) {
+            
+            console.log("AZAU: redirectUrl ERROR:", redirectUrl)
             throw new AuthError({
                 json: {
                     error: 'a0.redirect_uri.not_expected',
@@ -76,12 +82,15 @@ export default class WebAuth {
             state: resultState,
             error
         } = urlHashParsed
-
+        
+        console.log("AZAU: ERROR urlHashParsed:", urlHashParsed)
+        
         if (error) {
             throw new AuthError({json: urlHashParsed, status: 0})
         }
 
         if (resultState !== state) {
+            console.log("AZAU: ERROR resultState / state:", urlHashParsed)
             throw new AuthError({
                 json: {
                     error: 'a0.state.invalid',
