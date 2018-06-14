@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class AzureAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
-    private static final int CANCEL_EVENT_DELAY = 5000;
+    private static final int CANCEL_EVENT_DELAY = 1000;
 
     private final ReactApplicationContext reactContext;
     private Callback callback;
@@ -94,13 +94,13 @@ public class AzureAuthModule extends ReactContextBaseJavaModule implements Lifec
             @Override
             public void run() {
                 Callback cb = AzureAuthModule.this.callback;
-                if (cb != null) {
-                    final WritableMap error = Arguments.createMap();
-                    error.putString("error", "a0.session.user_cancelled");
-                    error.putString("error_description", "User cancelled the Auth");
-                    cb.invoke(error);
-                    AzureAuthModule.this.callback = null;
-                }
+//                 if (cb != null) {
+//                     final WritableMap error = Arguments.createMap();
+//                     error.putString("error", "a0.session.user_cancelled");
+//                     error.putString("error_description", "User cancelled the Auth");
+//                     cb.invoke(error);
+//                     AzureAuthModule.this.callback = null;
+//                 }
             }
         }, CANCEL_EVENT_DELAY);
     }
