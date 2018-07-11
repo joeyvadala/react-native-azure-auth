@@ -93,9 +93,9 @@ public class AzureAuthModule extends ReactContextBaseJavaModule implements Lifec
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Callback cb = AzureAuthModule.this.callback;
                 Log.d("CB ERROR", "Error with cb");
                 Log.d("CB ERROR", cb.toString());
-                Callback cb = AzureAuthModule.this.callback;
                 if (cb != null) {
                     final WritableMap error = Arguments.createMap();
                     error.putString("error", "a0.session.user_cancelled");
