@@ -94,13 +94,13 @@ public class AzureAuthModule extends ReactContextBaseJavaModule implements Lifec
             @Override
             public void run() {
                 Callback cb = AzureAuthModule.this.callback;
-//                 if (cb != null) {
-//                     final WritableMap error = Arguments.createMap();
-//                     error.putString("error", "a0.session.user_cancelled");
-//                     error.putString("error_description", "User cancelled the Auth");
-//                     cb.invoke(error);
-//                     AzureAuthModule.this.callback = null;
-//                 }
+                if (cb != null) {
+                    final WritableMap error = Arguments.createMap();
+                    error.putString("error", "a0.session.user_cancelled");
+                    error.putString("error_description", "User cancelled the Auth");
+                    cb.invoke(error);
+                    AzureAuthModule.this.callback = null;
+                }
             }
         }, CANCEL_EVENT_DELAY);
     }
